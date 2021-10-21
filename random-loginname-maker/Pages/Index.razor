@@ -1,0 +1,48 @@
+﻿@page "/"
+
+    <div class="text-center">
+        <h1 class="mb-5">Générateur de pseudo</h1>
+        
+        <div class="my-2">
+            <button @onclick="@(e => Create())" class="btn btn-primary btn-lg">Créer</button>
+        </div>
+
+        <div class="my-4">
+            @if (word1 != null && word2 != null && nb > 0)
+            {
+                @word1@word2@nb
+            }
+        </div>
+        <div class="my-2">
+            <button @onclick="@(e => Validate())" class="btn btn-success btn-lg">Valider</button>
+        </div>
+    </div>
+
+    @code{
+        public string word1 { get; set; }
+        public string word2 { get; set; }
+        public int nb { get; set; }
+        public string pseudo { get; set; }
+
+        List<string> list1 = new List<string> { "Crab", "Lapin", "Poisson", "Chat", "Chien" };
+        List<string> list2 = new List<string> { "Superbe", "Zen", "Genial", "Amusant", "Gentil" };
+
+        public void Create()
+        {
+            Random randL1 = new Random();
+            Random randL2 = new Random();
+            Random randNb = new Random();
+
+            int r = randL1.Next(list1.Count);
+            word1 = list1[r];
+            int ra = randL2.Next(list2.Count);
+            word2 = list2[ra];
+            nb = randNb.Next(1001);
+        }
+
+        public void Validate()
+        {
+            pseudo = word1 + word2 + nb.ToString();
+        }
+
+    }

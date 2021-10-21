@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "random-loginname-maker", "random-loginname-maker\random-loginname-maker.csproj", "{FEABE3EF-23D1-4E76-997E-94FF625E2EA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEABE3EF-23D1-4E76-997E-94FF625E2EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEABE3EF-23D1-4E76-997E-94FF625E2EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEABE3EF-23D1-4E76-997E-94FF625E2EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEABE3EF-23D1-4E76-997E-94FF625E2EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BD2D83E-DDEA-4DEF-9F8B-55F53F2048E6}
+	EndGlobalSection
+EndGlobal
