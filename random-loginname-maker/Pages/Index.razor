@@ -27,14 +27,16 @@
 
     public void PseudoGeneratorTest()
     {
-        List<string> list1 = new List<string>();
-        List<string> list2 = new List<string>();
-        list1 = PseudoGenerator.ParseFile(@"https://listofwords25102021.blob.core.windows.net/files/liste_francais.txt");
-        list2 = PseudoGenerator.ParseFile(@"https://listofwords25102021.blob.core.windows.net/files/motsPositifs.txt");
-
-        result = PseudoGenerator.GetPseudo(list1, list2);
+        PseudoGenerator.ParseFile(@"C:\Users\Libre\Desktop\liste_francais.txt");
     }
 
+    //Test cloud
+    //List<string> list1 = new List<string>();
+    //List<string> list2 = new List<string>();
+    //list1 = PseudoGenerator.ParseFile(@"FILENAME");
+    //    list2 = PseudoGenerator.ParseFile(@"FILENAME2");
+    //    result = PseudoGenerator.GetPseudo(list1, list2);
+    
     //Test manuel
     //List<string> list1 = new List<string> { "Crab", "Lapin", "Poisson", "Chat", "Chien" };
     //List<string> list2 = new List<string> { "Superbe", "Zen", "Genial", "Amusant", "Gentil" };
