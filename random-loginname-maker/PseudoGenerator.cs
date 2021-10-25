@@ -46,7 +46,10 @@ namespace random_loginname_maker
             p.word2 = list2[ra];
             p.nb = randNb.Next(1001);
             p.result = p.word1 + p.word2 + p.nb.ToString();
-            return p.result;                 
+            return p.result;      
+            // Insert (id:int32) Liste1 < 100000 List2 > 100000
+            // BsonArray c[a, b]
+            // Find(Builder<BsonDocument>.Filter.In("_id", c))
         }
 
         //public void Validate()
