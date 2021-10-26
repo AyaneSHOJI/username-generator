@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -21,39 +23,76 @@ namespace random_loginname_maker
         public List<string> list2;
 
         public class WordsList
-        {   [BsonId]
-            public Int32 _id = 0;
+        {
+            public int _id;
             public string word;
         }
+
+
         public static void ParseFile(string fileName)
         {
             MongoClient client = new MongoClient();
             client.DropDatabase("pseudo");
             var db = client.GetDatabase("pseudo");
             var table = db.GetCollection<WordsList>("wordsList");
+            
 
             StreamReader file = new StreamReader(fileName);
             string line;
 
             int bufferSize = 1000;
             List<WordsList> buffer = new List<WordsList>();
-            WordsList wl = new WordsList();
+            // WordsList wl = new WordsList();
+
+            int idx = 0;
             while ((line = file.ReadLine()) != null)
             {
-                wl._id++;
-                wl.word = line;
-                buffer.Add(wl);
+                buffer.Add(new WordsList() { word = line, _id = idx++ });
 
                 if(buffer.Count > bufferSize)
                 {
                     table.InsertMany(buffer);
                     buffer.Clear();
                 }
-            
             }
+
+            //idx = 100000;
             
             table.InsertMany(buffer);
         }
+
+        public static string GetPseudo()
+        {
+            MongoClient client = new MongoClient();
+            var db = client.GetDatabase("pseudo");
+            var table = db.GetCollection<WordsList>("wordsList");
+
+            Random rand = new Random();
+            Random randNb = new Random();
+
+            PseudoGenerator p = new PseudoGenerator();
+
+            //French dico 0-22741, 
+            int r1 = rand.Next(0, 22741);
+            int r2 = rand.Next(22742, 22853);
+
+            p.nb = randNb.Next(1001);
+            BsonArray nbs = new BsonArray { r1, r2 };
+            var r = table.Find(Builders<WordsList>.Filter.In(_ => _._id, nbs)).ToList();
+            string firstWord = r[0].word;
+            string secondWord = r[1].word;
+
+            //Capitalize first letter
+            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+
+            //Remove white space
+            string trimmedFirstWord = Regex.Replace(firstWord, @"s", "");
+
+            p.result = ti.ToTitleCase(trimmedFirstWord) + ti.ToTitleCase(secondWord) + p.nb.ToString();
+            return p.result;
+
+        }
+
 
         //22740 list mot fr
         //22852 total
