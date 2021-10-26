@@ -28,7 +28,6 @@ namespace random_loginname_maker
             public string word;
         }
 
-
         public static void ParseFile(string fileName)
         {
             MongoClient client = new MongoClient();
@@ -36,15 +35,15 @@ namespace random_loginname_maker
             var db = client.GetDatabase("pseudo");
             var table = db.GetCollection<WordsList>("wordsList");
             
-
             StreamReader file = new StreamReader(fileName);
             string line;
 
             int bufferSize = 1000;
             List<WordsList> buffer = new List<WordsList>();
-            // WordsList wl = new WordsList();
 
+            //For increment integer ID instead of using ObjectId 
             int idx = 0;
+
             while ((line = file.ReadLine()) != null)
             {
                 buffer.Add(new WordsList() { word = line, _id = idx++ });
@@ -55,28 +54,27 @@ namespace random_loginname_maker
                     buffer.Clear();
                 }
             }
-
-            //idx = 100000;
             
             table.InsertMany(buffer);
         }
 
+         //Pseudo is composed of "first word(from Frech dico)" "second word(from Mots positifs)" "numbers"
         public static string GetPseudo()
         {
             MongoClient client = new MongoClient();
             var db = client.GetDatabase("pseudo");
             var table = db.GetCollection<WordsList>("wordsList");
 
-            Random rand = new Random();
+            Random randWord = new Random();
             Random randNb = new Random();
 
             PseudoGenerator p = new PseudoGenerator();
 
-            //French dico 0-22741, 
-            int r1 = rand.Next(0, 22741);
-            int r2 = rand.Next(22742, 22853);
-
-            p.nb = randNb.Next(1001);
+            //French dico id between 0-22741
+            int r1 = randWord.Next(0, 22741);
+            //mots positif id between 22742-22851
+            int r2 = randWord.Next(22742, 22852);
+            
             BsonArray nbs = new BsonArray { r1, r2 };
             var r = table.Find(Builders<WordsList>.Filter.In(_ => _._id, nbs)).ToList();
             string firstWord = r[0].word;
@@ -88,20 +86,12 @@ namespace random_loginname_maker
             //Remove white space
             string trimmedFirstWord = Regex.Replace(firstWord, @"s", "");
 
+            //Random numbers between 0-1000
+            p.nb = randNb.Next(1001);
+
             p.result = ti.ToTitleCase(trimmedFirstWord) + ti.ToTitleCase(secondWord) + p.nb.ToString();
             return p.result;
-
         }
-
-
-        //22740 list mot fr
-        //22852 total
-
-        //----------with DBB-------------------------
-        // Insert (id:int32) Liste1 < 100000 List2 > 100000
-        // BsonArray c[a, b]
-        // Find(Builder<BsonDocument>.Filter.In("_id", c))
-
 
         //------------ With files-------------------
         //public static List<string> ParseFile(string link)
