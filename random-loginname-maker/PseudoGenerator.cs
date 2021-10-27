@@ -84,7 +84,8 @@ namespace random_loginname_maker
             string secondWord = r[1].word;
 
             //Capitalize first letter
-            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+            CultureInfo myCultureInfo = new CultureInfo("fr-FR");
+            TextInfo ti = myCultureInfo.TextInfo;
 
             //Remove white space
             string trimmedFirstWord = Regex.Replace(firstWord, @"\s", "");
