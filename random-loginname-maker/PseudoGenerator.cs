@@ -58,7 +58,7 @@ namespace random_loginname_maker
             table.InsertMany(buffer);
         }
 
-         //Pseudo is composed of "first word(from Frech dico)" "second word(from Mots positifs)" "numbers"
+        //Pseudo is composed of "first word(from Frech dico)" "second word(from Mots positifs)" "numbers"
         public static string GetPseudo()
         {
             MongoClient client = new MongoClient();
@@ -69,6 +69,9 @@ namespace random_loginname_maker
             Random randNb = new Random();
 
             PseudoGenerator p = new PseudoGenerator();
+
+            //How to count all documents
+            long count = table.Find(_ => true).CountDocuments();
 
             //French dico id between 0-22741
             int r1 = randWord.Next(0, 22741);
@@ -84,8 +87,8 @@ namespace random_loginname_maker
             TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
 
             //Remove white space
-            string trimmedFirstWord = Regex.Replace(firstWord, @"s", "");
-
+            string trimmedFirstWord = Regex.Replace(firstWord, @"\s", "");
+           
             //Random numbers between 0-1000
             p.nb = randNb.Next(1001);
 
