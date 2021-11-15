@@ -1,22 +1,19 @@
 ﻿@page "/"
 
 
-<div class="text-center">
+<div class="text-center mt-3">
     <h1 class="mb-5">Générateur de pseudo</h1>
 
-    <div class="my-2">
+    <div class="my-2 mb-5">
         <button @onclick="@(e => PseudoGeneratorTest())" class="btn btn-primary btn-lg">Créer</button>
     </div>
 
     <div class="my-4">
         @if (result != null)
         {
-            @result
+           <h2 class="font-italic">@result</h2> 
         }
     </div>
-    @*<div class="my-2">
-            <button @onclick="@(e => Validate())" class="btn btn-success btn-lg">Valider</button>
-        </div>*@
 </div>
 
 @code{
@@ -28,16 +25,9 @@
     public void PseudoGeneratorTest()
     {
         //Only for the first time
-        //PseudoGenerator.ParseFile(@"C:\Users\Libre\Desktop\liste_francais.txt");
+        //PseudoGenerator.ParseFile(@"Your entire file path");
         result = PseudoGenerator.GetPseudo();
     }
-
-    //Test cloud
-    //List<string> list1 = new List<string>();
-    //List<string> list2 = new List<string>();
-    //list1 = PseudoGenerator.ParseFile(@"FILENAME");
-    //    list2 = PseudoGenerator.ParseFile(@"FILENAME2");
-    //    result = PseudoGenerator.GetPseudo(list1, list2);
     
     //Test manuel
     //List<string> list1 = new List<string> { "Crab", "Lapin", "Poisson", "Chat", "Chien" };
